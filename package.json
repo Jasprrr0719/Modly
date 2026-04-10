@@ -1,0 +1,77 @@
+{
+  "name": "modly",
+  "version": "1.0.0",
+  "description": "Twitch Moderations-Tool",
+  "main": "electron/main.js",
+  "scripts": {
+    "vite": "vite",
+    "electron": "electron .",
+    "dev": "concurrently \"npm run vite\" \"npm run electron\"",
+    "build": "vite build",
+    "dist": "vite build && electron-builder",
+    "dist:win": "vite build && electron-builder --win",
+    "dist:mac": "vite build && electron-builder --mac",
+    "dist:linux": "vite build && electron-builder --linux",
+    "publish": "vite build && electron-builder --publish always"
+  },
+  "build": {
+    "appId": "com.modly.app",
+    "productName": "Modly",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "!node_modules/.cache"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        },
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "public/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "portable": {
+      "artifactName": "Modly-Portable-${version}.${ext}"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "public/icon.icns"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "public/icon.png"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Jasprrr0719",
+      "repo": "modly"
+    }
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tmi.js": "^1.8.5",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "concurrently": "^8.0.0",
+    "electron": "^27.0.0",
+    "electron-builder": "^24.0.0",
+    "vite": "^5.0.0"
+  }
+}
